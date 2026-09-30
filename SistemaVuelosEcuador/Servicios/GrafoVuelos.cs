@@ -24,9 +24,14 @@ namespace SistemaVuelosEcuador.Servicios
         {
             AgregarAeropuerto(origen);
             AgregarAeropuerto(destino);
-
+    
+            // Conexión Ida: origen -> destino
             var aeroOrigen = _aeropuertos.Find(a => a.Codigo == origen);
             aeroOrigen?.VuelosSalida.Add(new Vuelo(origen, destino, precio));
+
+            // Conexión Vuelta: destino -> origen (Convierte la estructura en un Grafo No Dirigido)
+            var aeroDestino = _aeropuertos.Find(a => a.Codigo == destino);
+            aeroDestino?.VuelosSalida.Add(new Vuelo(destino, origen, precio));
         }
 
         public List<Aeropuerto> ObtenerTodosAeropuertos()
